@@ -7,10 +7,10 @@ from collections import defaultdict
 if not 'reduce' in dir(__builtins__):
     from functools import reduce
 
-class AttrDict(dict): 
-    def __init__(self, *args, **kwargs): 
+class AttrDict(dict):
+    def __init__(self, *args, **kwargs):
         super(AttrDict, self).__init__(*args, **kwargs)
-        self.__dict__ = self 
+        self.__dict__ = self
 
 rdd=lambda: defaultdict(rdd)
 udd=lambda d: {k:udd(v) if isinstance(v,defaultdict) else v for k,v in d.items()}
@@ -46,8 +46,10 @@ if __name__ == '__main__':
         leaf=spl[-1]
         reduce(lambda o,v: o[v],path,definition)[leaf]=ix
     definition=udd(definition)
+
     objects=rdd()
     for row in reader:
         process(definition,row,objects)
     objects=ufsdd(objects)
+
     from pprint import pprint; pprint(objects)
