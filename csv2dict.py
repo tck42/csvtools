@@ -14,7 +14,7 @@ class AttrDict(dict):
 
 rdd=lambda: defaultdict(rdd)
 udd=lambda d: {k:udd(v) if isinstance(v,defaultdict) else v for k,v in d.items()}
-ufsdd=lambda d: [AttrDict({k1:v1 if isinstance(v1,str) else ufsdd(v1) for k1,v1 in v.items()}) for k,v in d.items()]
+ufsdd=lambda d: [AttrDict({k1:v1 if isinstance(v1,str) else ufsdd(v1) for k1,v1 in v.items()}) for v in d.values()]
 
 def process(cdef,row,level=rdd()):
     leafs=[]
